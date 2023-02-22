@@ -6,13 +6,12 @@ import com.capitole.service.backend.inventory.manager.exception.BusinessCapabili
 import com.capitole.service.backend.inventory.manager.logic.PriceValidateLogic;
 import com.capitole.service.backend.inventory.manager.model.PriceValidateRequestDTO;
 import com.capitole.service.backend.inventory.manager.model.PriceValidateResponseDTO;
+import com.capitole.service.backend.inventory.manager.utils.CapitoleStatusResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.management.loading.MLetContent;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -33,6 +32,8 @@ public class PriceValidateLogicImpl implements PriceValidateLogic {
 
     @Autowired
     private PriceRepository priceRepository;
+
+
 
     @Override
     public PriceValidateResponseDTO invoke(PriceValidateRequestDTO request) {

@@ -1,5 +1,6 @@
 package com.capitole.service.backend.inventory.manager.model;
 
+import com.capitole.service.backend.inventory.manager.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
