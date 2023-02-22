@@ -11,6 +11,8 @@ import com.capitole.service.backend.inventory.manager.model.StatusDataDTO;
 import com.capitole.service.backend.inventory.manager.utils.CapitoleStatusResponseUtil;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -26,6 +28,8 @@ import static com.capitole.service.backend.inventory.manager.enums.Status.SUCCES
 @Slf4j
 public class PriceValidateCommandImpl implements PriceValidateCommand {
 
+    private static Logger LOGGER = LoggerFactory.getLogger(PriceValidateCommandImpl.class);
+
     private static final String EXCEPTION = "Request: {}\nException: {}";
 
     @Autowired
@@ -38,7 +42,7 @@ public class PriceValidateCommandImpl implements PriceValidateCommand {
     @CircuitBreaker(name = "priceValidate", fallbackMethod = "priceValidateFallback")
     public CapitoleResponseEntity<PriceValidateResponseDTO> priceValidate(final PriceValidateRequestDTO request) throws BusinessCapabilityException {
 
-        log.debug("Inicia la ejecucion del comando para obtener la tarifa final del producto");
+        LOGGER.debug("Inicia la ejecucion del comando para obtener la tarifa final del producto");
 
         var status = new StatusDataDTO();
 
@@ -48,11 +52,11 @@ public class PriceValidateCommandImpl implements PriceValidateCommand {
             response.setBody(priceValidateLogic.invoke(request));
             response.setStatus(statusResponseUtil.getStatusResponse(SUCCESS));
         } catch (BusinessCapabilityException e) {
-            log.error("BusinessCapabilityException", e);
+            LOGGER.error("BusinessCapabilityException", e);
             status.setCode(e.getReturnCode());
             status.setDescription(e.getReturnCodeDesc());
         }  catch (Exception e){
-            log.error(EXCEPTION, request, e.toString());
+            LOGGER.error(EXCEPTION, request, e.toString());
             status.setCode(FATAL_ERROR.getCode());
             status.setDescription(FATAL_ERROR.getDescription());
         }
@@ -69,7 +73,7 @@ public class PriceValidateCommandImpl implements PriceValidateCommand {
         dataLog.setCode(FALLBACK.getCode());
         dataLog.setCodeMessage(FALLBACK.getDescription());
         dataLog.setLevel(LogLevel.ERROR);
-        log.error("Fallo el comando para obtener la tarifa final del producto", throwable);
+        LOGGER.error("Fallo el comando para obtener la tarifa final del producto", throwable);
 
         final var response = new CapitoleResponseEntity<PriceValidateResponseDTO>();
         response.setStatus(statusResponseUtil.getStatusResponse(FALLBACK, throwable));

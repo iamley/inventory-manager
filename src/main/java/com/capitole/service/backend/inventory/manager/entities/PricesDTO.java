@@ -10,11 +10,15 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="prices")
-public class Prices implements Serializable {
+public class PricesDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name="price_list")
+    private Integer priceList;
+
+    @Column(name="brand_id")
     private Integer brandId;
 
     @Column(name="start_date")
@@ -22,9 +26,6 @@ public class Prices implements Serializable {
 
     @Column(name="end_date")
     private LocalDateTime endDate;
-
-    @Column(name="price_list")
-    private Integer priceList;
 
     @Column(name="product_id")
     private Long productId;

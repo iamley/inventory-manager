@@ -7,9 +7,10 @@ import com.capitole.service.backend.inventory.manager.model.PriceValidateRespons
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "Controlador de operaciones de consulta de precios")
 public class PriceController {
 
+    private static Logger LOGGER = LoggerFactory.getLogger(PriceController.class);
+
     @Autowired
     private PriceValidateCommand priceValidateCommand;
 
@@ -29,12 +32,11 @@ public class PriceController {
     @ApiOperation(value = "Consulta de precios", httpMethod = "POST", nickname = "Consulta Precios")
     public CapitoleResponseEntity<PriceValidateResponseDTO> priceValidate(PriceValidateRequestDTO request) {
 
-        log.debug("Inicio de la consulta de precios");
+        LOGGER.debug("Inicio de la consulta de precios");
 
-        final CapitoleResponseEntity<PriceValidateResponseDTO> response =
-                priceValidateCommand.priceValidate(request);
+        final CapitoleResponseEntity<PriceValidateResponseDTO> response = priceValidateCommand.priceValidate(request);
 
-        log.debug("Fin e la consulta de precios");
+        LOGGER.debug("Fin e la consulta de precios");
 
         return response;
     }

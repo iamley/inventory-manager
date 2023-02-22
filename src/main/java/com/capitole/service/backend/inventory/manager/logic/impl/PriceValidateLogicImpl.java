@@ -1,12 +1,12 @@
 package com.capitole.service.backend.inventory.manager.logic.impl;
 
 import com.capitole.service.backend.inventory.manager.adapter.repository.PriceRepository;
-import com.capitole.service.backend.inventory.manager.entities.Prices;
+import com.capitole.service.backend.inventory.manager.entities.PricesDTO;
 import com.capitole.service.backend.inventory.manager.exception.BusinessCapabilityException;
 import com.capitole.service.backend.inventory.manager.logic.PriceValidateLogic;
+import com.capitole.service.backend.inventory.manager.mapper.PricesMapper;
 import com.capitole.service.backend.inventory.manager.model.PriceValidateRequestDTO;
 import com.capitole.service.backend.inventory.manager.model.PriceValidateResponseDTO;
-import com.capitole.service.backend.inventory.manager.utils.CapitoleStatusResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,8 @@ public class PriceValidateLogicImpl implements PriceValidateLogic {
     @Autowired
     private PriceRepository priceRepository;
 
-
+    @Autowired
+    private PricesMapper mapper;
 
     @Override
     public PriceValidateResponseDTO invoke(PriceValidateRequestDTO request) {
@@ -42,9 +43,9 @@ public class PriceValidateLogicImpl implements PriceValidateLogic {
             validateRequest(request);
             LOGGER.info("Resquest send to service {}", request);
 
-            final Optional<Prices> reply = priceRepository.findAll();
+            final Optional<PricesDTO> reply = priceRepository.findById(mapper.toPricesDto(request));
 
-            LOGGER.info("Response send to service {}", reply);
+            LOGGER.info("Response send to service {}", reply.get());
 
         } catch (BusinessCapabilityException e) {
             LOGGER.error(LABEL_ERROR, e);
@@ -77,12 +78,12 @@ public class PriceValidateLogicImpl implements PriceValidateLogic {
         }
     }
 
-    private long getMonthsBetween(LocalDateTime start, LocalDateTime end) {
+    private long getBetween(LocalDateTime start, LocalDateTime end) {
 
         var startDate = start.toLocalDate();
         var endDate = end.toLocalDate();
 
-        return ChronoUnit.DAYS.between(startDate, endDate);
+        return ChronoUnit.MINUTES.between(startDate, endDate);
     }
 
 }
