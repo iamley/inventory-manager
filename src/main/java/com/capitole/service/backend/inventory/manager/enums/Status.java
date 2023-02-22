@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Status {
 
-    BAD_REQUEST("0001", "Solicitud incorrecta, faltan datos de entrada en el request."),
+    BAD_REQUEST("0001", "Bad request, missing input data in the request."),
     FATAL_ERROR("0002", "Unexpected error in service execution.");
 
     private final String code;
