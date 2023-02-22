@@ -8,5 +8,5 @@ product_id INT(8) NOT NULL,
 priority INT(8) NOT NULL,
 price DECIMAL(8,2) NOT NULL,
 currency VARCHAR(50) NOT NULL,
-PRIMARY KEY (brand_id),
+PRIMARY KEY (price_list),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

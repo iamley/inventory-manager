@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Repository
 public class PriceRepository implements CrudRepository<Prices, Prices> {
+
     @Override
     public <S extends Prices> S save(S s) {
         return null;
