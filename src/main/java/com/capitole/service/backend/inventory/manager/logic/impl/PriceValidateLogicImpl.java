@@ -5,25 +5,25 @@ import com.capitole.service.backend.inventory.manager.entities.PricesDTO;
 import com.capitole.service.backend.inventory.manager.exception.BusinessCapabilityException;
 import com.capitole.service.backend.inventory.manager.logic.PriceValidateLogic;
 import com.capitole.service.backend.inventory.manager.mapper.PricesMapper;
+import com.capitole.service.backend.inventory.manager.model.PriceOutputDTO;
 import com.capitole.service.backend.inventory.manager.model.PriceValidateRequestDTO;
-import com.capitole.service.backend.inventory.manager.model.PriceValidateResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static com.capitole.service.backend.inventory.manager.enums.Status.BAD_REQUEST;
-import static com.capitole.service.backend.inventory.manager.enums.Status.FATAL_ERROR;
+import static com.capitole.service.backend.inventory.manager.enums.Status.NOT_FOUND;
 
 @Slf4j
-@Component("PriceValidateLogicImpl")
+@Component("PriceValidateLogic")
 public class PriceValidateLogicImpl implements PriceValidateLogic {
 
     private static Logger LOGGER = LoggerFactory.getLogger(PriceValidateLogicImpl.class);
@@ -33,27 +33,29 @@ public class PriceValidateLogicImpl implements PriceValidateLogic {
     @Autowired
     private PriceRepository priceRepository;
 
+    @Lazy
     @Autowired
     private PricesMapper mapper;
 
     @Override
-    public PriceValidateResponseDTO invoke(PriceValidateRequestDTO request) {
+    public PriceOutputDTO invoke(PriceValidateRequestDTO request) {
 
-        try {
-            validateRequest(request);
-            LOGGER.info("Resquest send to service {}", request);
+        validateRequest(request);
+        LOGGER.info("Resquest send to service {}", request);
 
-            final Optional<PricesDTO> reply = priceRepository.findById(mapper.toPricesDto(request));
+        final List<PricesDTO> reply = priceRepository
+                .findPricesList(request.getBrandId(), request.getProductId());
 
-            LOGGER.info("Response send to service {}", reply.get());
-
-        } catch (BusinessCapabilityException e) {
-            LOGGER.error(LABEL_ERROR, e);
-            throw new BusinessCapabilityException(e.getReturnCode(), e.getReturnCodeDesc());
-        } catch (Exception e) {
-            LOGGER.error(LABEL_ERROR, e);
-            throw new BusinessCapabilityException(FATAL_ERROR.getCode(), FATAL_ERROR.getDescription());
+        if (reply.size() > 0) {
+            final var price = mapper.toPricesValidateResponseDto(reply.get(0));
+            LOGGER.info("Response send to service {}", price);
+            return price;
+        } else {
+            throw new BusinessCapabilityException(
+                    NOT_FOUND.getCode(),
+                    NOT_FOUND.getDescription());
         }
+
     }
 
     private void validateRequest(PriceValidateRequestDTO request) throws BusinessCapabilityException {

@@ -15,17 +15,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.logging.LogLevel;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import static com.capitole.service.backend.inventory.manager.enums.Status.FALLBACK;
 import static com.capitole.service.backend.inventory.manager.enums.Status.FATAL_ERROR;
 import static com.capitole.service.backend.inventory.manager.enums.Status.SUCCESS;
 
-@Service("PriceValidateCommand")
-@RefreshScope
 @Slf4j
+@Component("PriceValidateCommand")
 public class PriceValidateCommandImpl implements PriceValidateCommand {
 
     private static Logger LOGGER = LoggerFactory.getLogger(PriceValidateCommandImpl.class);
@@ -44,13 +42,17 @@ public class PriceValidateCommandImpl implements PriceValidateCommand {
 
         LOGGER.debug("Inicia la ejecucion del comando para obtener la tarifa final del producto");
 
+        final var response = new CapitoleResponseEntity<PriceValidateResponseDTO>();
+        final var data = new PriceValidateResponseDTO();
         var status = new StatusDataDTO();
 
-        final CapitoleResponseEntity<PriceValidateResponseDTO> response = new CapitoleResponseEntity<>();
-
         try {
-            response.setBody(priceValidateLogic.invoke(request));
-            response.setStatus(statusResponseUtil.getStatusResponse(SUCCESS));
+            data.setBody(priceValidateLogic.invoke(request));
+            response.setBody(data);
+
+            status.setCode(SUCCESS.getCode());
+            status.setDescription(SUCCESS.getDescription());
+
         } catch (BusinessCapabilityException e) {
             LOGGER.error("BusinessCapabilityException", e);
             status.setCode(e.getReturnCode());
@@ -60,8 +62,9 @@ public class PriceValidateCommandImpl implements PriceValidateCommand {
             status.setCode(FATAL_ERROR.getCode());
             status.setDescription(FATAL_ERROR.getDescription());
         }
+        data.setStatus(status);
+        response.setBody(data);
         response.setStatus(status);
-
         return response;
     }
 
