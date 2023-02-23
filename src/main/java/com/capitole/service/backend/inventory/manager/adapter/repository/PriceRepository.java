@@ -8,14 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
 @Repository
 public interface PriceRepository extends CrudRepository<PricesDTO, PricesDTO> {
 
-    @Query(value = "SELECT * FROM prices t WHERE t.brand_id= :brand and t.product_id= :product",
+    @Query(value = "SELECT * FROM PRICES t WHERE t.brand_id= :brand and t.product_id= :product",
             nativeQuery = true)
     List<PricesDTO> findPricesList(
             @Param("brand") Integer brand,
             @Param("product") Integer product);
-
 }

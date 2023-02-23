@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -33,7 +32,6 @@ public class PriceValidateLogicImpl implements PriceValidateLogic {
     @Autowired
     private PriceRepository priceRepository;
 
-    @Lazy
     @Autowired
     private PricesMapper mapper;
 
@@ -46,7 +44,7 @@ public class PriceValidateLogicImpl implements PriceValidateLogic {
         final List<PricesDTO> reply = priceRepository
                 .findPricesList(request.getBrandId(), request.getProductId());
 
-        if (reply.size() > 0) {
+        if (reply.stream().count() > 0) {
             final var price = mapper.toPricesValidateResponseDto(reply.get(0));
             LOGGER.info("Response send to service {}", price);
             return price;

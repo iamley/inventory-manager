@@ -2,6 +2,8 @@ package com.capitole.service.backend.inventory.manager.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -9,13 +11,14 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="prices")
+@Table(name="PRICES")
 public class PricesDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name="price_list")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer priceList;
 
     @Column(name="brand_id")
