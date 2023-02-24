@@ -12,9 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,18 +22,17 @@ import static com.capitole.service.backend.inventory.manager.enums.Status.BAD_RE
 import static com.capitole.service.backend.inventory.manager.enums.Status.NOT_FOUND;
 
 @Slf4j
-@Component("PriceValidateLogic")
+@Component("PriceValidateLogicImpl")
+@Transactional
 public class PriceValidateLogicImpl implements PriceValidateLogic {
 
     private static Logger LOGGER = LoggerFactory.getLogger(PriceValidateLogicImpl.class);
 
-    private static final String LABEL_ERROR = "Error generate {}";
+    @Autowired
+    private PricesMapper mapper;
 
     @Autowired
     private PriceRepository priceRepository;
-
-    @Autowired
-    private PricesMapper mapper;
 
     @Override
     public PriceOutputDTO invoke(PriceValidateRequestDTO request) {
@@ -45,9 +44,10 @@ public class PriceValidateLogicImpl implements PriceValidateLogic {
                 .findPricesList(request.getBrandId(), request.getProductId());
 
         if (reply.stream().count() > 0) {
-            final var price = mapper.toPricesValidateResponseDto(reply.get(0));
-            LOGGER.info("Response send to service {}", price);
-            return price;
+            final var price = mapper.toPricesValidateResponseDto(reply);
+            final var output = validateTimeframe(price, request);
+            LOGGER.info("Response send to service {}", output);
+            return output;
         } else {
             throw new BusinessCapabilityException(
                     NOT_FOUND.getCode(),
@@ -78,12 +78,18 @@ public class PriceValidateLogicImpl implements PriceValidateLogic {
         }
     }
 
-    private long getBetween(LocalDateTime start, LocalDateTime end) {
+    private PriceOutputDTO validateTimeframe(List<PriceOutputDTO> values, PriceValidateRequestDTO request) {
 
-        var startDate = start.toLocalDate();
-        var endDate = end.toLocalDate();
+        LocalDateTime dateNow = request.getDate();
+        List<PriceOutputDTO> outputList = new ArrayList<>();
 
-        return ChronoUnit.MINUTES.between(startDate, endDate);
+        for (PriceOutputDTO value : values) {
+            if (dateNow.isAfter(value.getStartDate()) && dateNow.isBefore(value.getEndDate())) {
+                outputList.add(value);
+            }
+        }
+
+        return outputList.get(0);
     }
 
 }

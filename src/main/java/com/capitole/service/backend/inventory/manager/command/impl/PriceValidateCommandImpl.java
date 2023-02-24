@@ -23,7 +23,7 @@ import static com.capitole.service.backend.inventory.manager.enums.Status.FATAL_
 import static com.capitole.service.backend.inventory.manager.enums.Status.SUCCESS;
 
 @Slf4j
-@Component("PriceValidateCommand")
+@Component("PriceValidateCommandImpl")
 public class PriceValidateCommandImpl implements PriceValidateCommand {
 
     private static Logger LOGGER = LoggerFactory.getLogger(PriceValidateCommandImpl.class);
