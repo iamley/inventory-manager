@@ -29,7 +29,6 @@
 		<aws-sdk.version>1.11.517</aws-sdk.version>
 		<log4j.version>2.17.1</log4j.version>
 		<lombok.version>1.18.8</lombok.version>
-		<swagger.codegen.version>3.0.18</swagger.codegen.version>
 		<javax.validation.version>2.0.1.Final</javax.validation.version>
 	</properties>
 
@@ -126,6 +125,18 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- SWAGGER -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>3.0.0</version>
 		</dependency>
 	</dependencies>
 
