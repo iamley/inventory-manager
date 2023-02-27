@@ -3,7 +3,6 @@ package com.capitole.service.backend.inventory.manager.exception;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.http.HttpStatus;
 
 @Data
 @Builder

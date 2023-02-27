@@ -19,8 +19,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import static com.capitole.service.backend.inventory.manager.enums.Status.BAD_REQUEST;
+import static com.capitole.service.backend.inventory.manager.enums.Status.FALLBACK;
 import static com.capitole.service.backend.inventory.manager.enums.Status.NOT_FOUND;
 
 @Slf4j
@@ -87,19 +89,22 @@ public class PriceValidateLogicImpl implements PriceValidateLogic {
         for (PricesModelDTO value : values) {
             if (dateNow.isAfter(value.getStartDate()) && dateNow.isBefore(value.getEndDate())) {
                 outputList.add(value);
-            } else {
-                throw new BusinessCapabilityException(
-                        NOT_FOUND.getCode(),
-                        NOT_FOUND.getDescription());
             }
         }
 
-        PricesModelDTO value = outputList
-                .stream()
-                .max(Comparator.comparing(PricesModelDTO::getPriority))
-                .orElseThrow(NoSuchElementException::new);
+        if(outputList != null) {
+            PricesModelDTO value = outputList
+                    .stream()
+                    .max(Comparator.comparing(PricesModelDTO::getPriority))
+                    .orElseThrow(NoSuchElementException::new);
 
-        return mapper.toPricesOutputDto(value);
+            return mapper.toPricesOutputDto(value);
+        } else {
+            throw new BusinessCapabilityException(
+                    NOT_FOUND.getCode(),
+                    NOT_FOUND.getDescription());
+        }
+
     }
 
 }
