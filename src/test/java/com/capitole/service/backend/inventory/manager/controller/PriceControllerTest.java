@@ -19,9 +19,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static com.capitole.service.backend.inventory.manager.enums.Status.BAD_REQUEST;
 import static com.capitole.service.backend.inventory.manager.enums.Status.FATAL_ERROR;
-import static com.capitole.service.backend.inventory.manager.enums.Status.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -93,6 +91,5 @@ public class PriceControllerTest {
         var reply = objectMapper.readValue(resultContent, PriceValidateResponseDTO.class);
         assertEquals(BAD_REQUEST.getCode(), reply.getStatus().getCode());
     }
-
 
 }
