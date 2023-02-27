@@ -24,13 +24,11 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import static com.capitole.service.backend.inventory.manager.enums.Status.NOT_FOUND;
 import static com.capitole.service.backend.inventory.manager.enums.Status.SUCCESS;
 import static com.capitole.service.backend.inventory.manager.enums.Status.FATAL_ERROR;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)

@@ -1,6 +1,6 @@
 package com.capitole.service.backend.inventory.manager.logic.impl;
 
-import com.capitole.service.backend.inventory.manager.adapter.repository.PriceRepository;
+import com.capitole.service.backend.inventory.manager.adapter.impl.PriceRepositoryImpl;
 import com.capitole.service.backend.inventory.manager.adapter.dto.PricesDTO;
 import com.capitole.service.backend.inventory.manager.exception.BusinessCapabilityException;
 import com.capitole.service.backend.inventory.manager.logic.PriceValidateLogic;
@@ -19,10 +19,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 import static com.capitole.service.backend.inventory.manager.enums.Status.BAD_REQUEST;
-import static com.capitole.service.backend.inventory.manager.enums.Status.FALLBACK;
 import static com.capitole.service.backend.inventory.manager.enums.Status.NOT_FOUND;
 
 @Slf4j
@@ -35,7 +33,7 @@ public class PriceValidateLogicImpl implements PriceValidateLogic {
     private PricesMapper mapper;
 
     @Autowired
-    private PriceRepository priceRepository;
+    private PriceRepositoryImpl repository;
 
     @Override
     public PriceOutputDTO invoke(PriceValidateRequestDTO request) {
@@ -43,8 +41,8 @@ public class PriceValidateLogicImpl implements PriceValidateLogic {
         validateRequest(request);
         LOGGER.info("Resquest send to service {}", request);
 
-        final List<PricesDTO> reply = priceRepository
-                .findPricesList(request.getBrandId(), request.getProductId());
+        final List<PricesDTO> reply = repository
+                .findProductsByBrand(request.getBrandId(), request.getProductId());
 
         if (reply.stream().count() > 0) {
             final var price = mapper.toPricesValidateList(reply);
