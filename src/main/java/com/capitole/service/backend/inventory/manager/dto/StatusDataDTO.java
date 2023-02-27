@@ -1,5 +1,6 @@
-package com.capitole.service.backend.inventory.manager.model;
+package com.capitole.service.backend.inventory.manager.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,8 @@ public class StatusDataDTO {
 
     protected String code;
     protected String description;
+
+    @JsonIgnore
     private HttpStatus httpStatus;
 
 }

@@ -1,7 +1,7 @@
 package com.capitole.service.backend.inventory.manager.logic;
 
-import com.capitole.service.backend.inventory.manager.model.PriceOutputDTO;
-import com.capitole.service.backend.inventory.manager.model.PriceValidateRequestDTO;
+import com.capitole.service.backend.inventory.manager.dto.PriceOutputDTO;
+import com.capitole.service.backend.inventory.manager.dto.PriceValidateRequestDTO;
 
 public interface PriceValidateLogic {
 

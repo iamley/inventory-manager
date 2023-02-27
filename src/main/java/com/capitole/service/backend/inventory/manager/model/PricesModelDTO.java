@@ -9,21 +9,13 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class PriceOutputDTO {
+public class PricesModelDTO {
 
-    @JsonProperty("product_id")
-    private Long productId;
-
-    @JsonProperty("brand_id")
+    private Integer productId;
     private Integer brandId;
-
-    @JsonProperty("price")
     private BigDecimal price;
-
-    @JsonProperty("start_date")
     private LocalDateTime startDate;
-
-    @JsonProperty("end_date")
     private LocalDateTime endDate;
+    private Integer priority;
 
 }

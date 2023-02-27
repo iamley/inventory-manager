@@ -1,4 +1,4 @@
-package com.capitole.service.backend.inventory.manager.entities;
+package com.capitole.service.backend.inventory.manager.adapter.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +36,7 @@ public class PricesDTO implements Serializable {
     private LocalDateTime endDate;
 
     @Column(name="product_id")
-    private Long productId;
+    private Integer productId;
 
     @Column(name="priority")
     private Integer priority;

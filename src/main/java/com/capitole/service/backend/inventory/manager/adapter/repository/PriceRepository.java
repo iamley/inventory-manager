@@ -1,6 +1,6 @@
 package com.capitole.service.backend.inventory.manager.adapter.repository;
 
-import com.capitole.service.backend.inventory.manager.entities.PricesDTO;
+import com.capitole.service.backend.inventory.manager.adapter.dto.PricesDTO;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

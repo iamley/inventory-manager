@@ -1,4 +1,4 @@
-package com.capitole.service.backend.inventory.manager.model;
+package com.capitole.service.backend.inventory.manager.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;

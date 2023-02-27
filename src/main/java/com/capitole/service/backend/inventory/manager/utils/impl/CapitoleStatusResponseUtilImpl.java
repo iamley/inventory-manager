@@ -1,7 +1,7 @@
 package com.capitole.service.backend.inventory.manager.utils.impl;
 
 import com.capitole.service.backend.inventory.manager.enums.Status;
-import com.capitole.service.backend.inventory.manager.model.StatusDataDTO;
+import com.capitole.service.backend.inventory.manager.dto.StatusDataDTO;
 import com.capitole.service.backend.inventory.manager.utils.CapitoleStatusResponseUtil;
 import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import org.springframework.http.converter.HttpMessageNotReadableException;

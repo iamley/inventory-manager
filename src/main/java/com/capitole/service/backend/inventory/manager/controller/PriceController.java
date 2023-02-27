@@ -2,10 +2,10 @@ package com.capitole.service.backend.inventory.manager.controller;
 
 import com.capitole.service.backend.inventory.manager.command.PriceValidateCommand;
 import com.capitole.service.backend.inventory.manager.exception.BusinessCapabilityException;
-import com.capitole.service.backend.inventory.manager.model.CapitoleResponseEntity;
-import com.capitole.service.backend.inventory.manager.model.PriceValidateRequestDTO;
-import com.capitole.service.backend.inventory.manager.model.PriceValidateResponseDTO;
-import com.capitole.service.backend.inventory.manager.model.StatusDataDTO;
+import com.capitole.service.backend.inventory.manager.dto.CapitoleResponseEntity;
+import com.capitole.service.backend.inventory.manager.dto.PriceValidateRequestDTO;
+import com.capitole.service.backend.inventory.manager.dto.PriceValidateResponseDTO;
+import com.capitole.service.backend.inventory.manager.dto.StatusDataDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;

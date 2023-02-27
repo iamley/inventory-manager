@@ -3,11 +3,11 @@ package com.capitole.service.backend.inventory.manager.command.impl;
 import com.capitole.service.backend.inventory.manager.command.PriceValidateCommand;
 import com.capitole.service.backend.inventory.manager.exception.BusinessCapabilityException;
 import com.capitole.service.backend.inventory.manager.logic.PriceValidateLogic;
-import com.capitole.service.backend.inventory.manager.model.CapitoleResponseEntity;
-import com.capitole.service.backend.inventory.manager.model.LoggerDataDTO;
-import com.capitole.service.backend.inventory.manager.model.PriceValidateRequestDTO;
-import com.capitole.service.backend.inventory.manager.model.PriceValidateResponseDTO;
-import com.capitole.service.backend.inventory.manager.model.StatusDataDTO;
+import com.capitole.service.backend.inventory.manager.dto.CapitoleResponseEntity;
+import com.capitole.service.backend.inventory.manager.dto.LoggerDataDTO;
+import com.capitole.service.backend.inventory.manager.dto.PriceValidateRequestDTO;
+import com.capitole.service.backend.inventory.manager.dto.PriceValidateResponseDTO;
+import com.capitole.service.backend.inventory.manager.dto.StatusDataDTO;
 import com.capitole.service.backend.inventory.manager.utils.CapitoleStatusResponseUtil;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.slf4j.Slf4j;
@@ -15,15 +15,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.logging.LogLevel;
-
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import static com.capitole.service.backend.inventory.manager.enums.Status.FALLBACK;
 import static com.capitole.service.backend.inventory.manager.enums.Status.FATAL_ERROR;
 import static com.capitole.service.backend.inventory.manager.enums.Status.SUCCESS;
 
 @Slf4j
-@Component("PriceValidateCommandImpl")
+@Service
 public class PriceValidateCommandImpl implements PriceValidateCommand {
 
     private static Logger LOGGER = LoggerFactory.getLogger(PriceValidateCommandImpl.class);

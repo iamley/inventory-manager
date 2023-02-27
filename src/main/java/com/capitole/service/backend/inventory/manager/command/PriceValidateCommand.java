@@ -1,9 +1,9 @@
 package com.capitole.service.backend.inventory.manager.command;
 
 import com.capitole.service.backend.inventory.manager.exception.BusinessCapabilityException;
-import com.capitole.service.backend.inventory.manager.model.CapitoleResponseEntity;
-import com.capitole.service.backend.inventory.manager.model.PriceValidateRequestDTO;
-import com.capitole.service.backend.inventory.manager.model.PriceValidateResponseDTO;
+import com.capitole.service.backend.inventory.manager.dto.CapitoleResponseEntity;
+import com.capitole.service.backend.inventory.manager.dto.PriceValidateRequestDTO;
+import com.capitole.service.backend.inventory.manager.dto.PriceValidateResponseDTO;
 
 public interface PriceValidateCommand {
 

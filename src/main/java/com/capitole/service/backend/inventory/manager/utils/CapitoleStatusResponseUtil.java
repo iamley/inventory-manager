@@ -1,7 +1,7 @@
 package com.capitole.service.backend.inventory.manager.utils;
 
 import com.capitole.service.backend.inventory.manager.enums.Status;
-import com.capitole.service.backend.inventory.manager.model.StatusDataDTO;
+import com.capitole.service.backend.inventory.manager.dto.StatusDataDTO;
 
 public interface CapitoleStatusResponseUtil {
 
