@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static com.capitole.service.backend.inventory.manager.enums.Status.BAD_REQUEST;
+import static com.capitole.service.backend.inventory.manager.enums.Status.FATAL_ERROR;
 import static com.capitole.service.backend.inventory.manager.enums.Status.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -55,21 +56,22 @@ public class PriceControllerTest {
     }
 
     @Test
-    void getPricesListSuccess() throws Exception {
+    void getPricesListFatalError() throws Exception {
 
         MvcResult mvcResult = mockMvc
                 .perform(post("/price/validate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
                 )
-                .andExpect(status().isOk())
+                .andExpect(status().isInternalServerError())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
         String resultContent = mvcResult.getResponse().getContentAsString();
 
         var reply = objectMapper.readValue(resultContent, PriceValidateResponseDTO.class);
-        assertNull(reply.getStatus().getCode());
+        assertEquals(FATAL_ERROR.getCode(), reply.getStatus().getCode());
+
     }
 
     @Test
